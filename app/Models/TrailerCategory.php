@@ -26,7 +26,6 @@ class TrailerCategory extends Model
         return $this->hasMany(TrailerSubCategory::class);
     }
 
-
     protected function casts(): array
     {
         return [
