@@ -18,6 +18,9 @@ class TrailerSubCategory extends Model
         'trailer_category_id',
     ];
 
+    /**
+     * @return BelongsTo<TrailerCategory, $this>
+     */
     public function trailerCategory(): BelongsTo
     {
         return $this->belongsTo(TrailerCategory::class);

@@ -18,10 +18,15 @@ class TrailerCategory extends Model
         'use_type'
     ];
 
+    /**
+     * @return HasMany<TrailerSubCategory, $this>
+     */
     public function trailerSubCategories(): HasMany
     {
         return $this->hasMany(TrailerSubCategory::class);
     }
+
+
     protected function casts(): array
     {
         return [
