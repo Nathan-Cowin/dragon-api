@@ -11,6 +11,10 @@
 |
 */
 
+use App\Models\User;
+
+use function Pest\Laravel\actingAs;
+
 pest()->extend(Tests\TestCase::class)
   ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -41,7 +45,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function login(): void
 {
-    // ..
+    actingAs(User::factory()->create());
 }
