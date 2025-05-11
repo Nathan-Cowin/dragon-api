@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Schema;
 
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertModelExists;
+use function Pest\Laravel\assertModelMissing;
 
 /** Database table */
 it('exists', function () {
@@ -33,6 +34,15 @@ it('can update a user', function () {
 
     $data[$user->getKeyName()] = $user->getKey();
     assertDatabaseHas($user->getTable(), $data);
+});
+
+/** delete */
+it('can delete a user', function () {
+    /** @var User $user */
+    $user = User::factory()->create();
+    $user->delete();
+
+    assertModelMissing($user);
 });
 
 /** fillable */
