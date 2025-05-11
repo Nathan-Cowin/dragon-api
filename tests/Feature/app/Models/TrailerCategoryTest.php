@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertModelExists;
+use function Pest\Laravel\assertModelMissing;
 
 /** Database table */
 it('exists', function () {
@@ -32,6 +33,15 @@ it('can update a trailer category', function () {
 
     $data[$trailerCategory->getKeyName()] = $trailerCategory->getKey();
     assertDatabaseHas($trailerCategory->getTable(), $data);
+});
+
+/** delete */
+it('can delete a trailer category', function () {
+    /** @var TrailerCategory $trailerCategory */
+    $trailerCategory = TrailerCategory::factory()->create();
+    $trailerCategory->delete();
+
+    assertModelMissing($trailerCategory);
 });
 
 /** fillable */
