@@ -26,7 +26,7 @@ it('can update a trailer sub category', function () {
     /** @var TrailerSubCategory $trailerSubCategory */
     $trailerSubCategory = TrailerSubCategory::factory()->create();
 
-    $data = TrailerSubCategory::factory()->raw();
+    $data = TrailerSubCategory::factory()->make()->toArray();
 
     $trailerSubCategory->update($data);
 

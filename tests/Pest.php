@@ -13,6 +13,7 @@
 
 use App\Models\User;
 
+use Pest\Expectation;
 use function Pest\Laravel\actingAs;
 
 pest()->extend(Tests\TestCase::class)
@@ -30,8 +31,8 @@ pest()->extend(Tests\TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+expect()->extend('toBeOne', function (Expectation $expectation) {
+    return $expectation->toBe(1);
 });
 
 /*
