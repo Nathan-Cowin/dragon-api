@@ -3,6 +3,7 @@
 use App\Enums\UseType;
 use App\Models\TrailerCategory;
 use App\Models\TrailerSubCategory;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -27,7 +28,7 @@ it('can update a trailer category', function () {
     /** @var TrailerCategory $trailerCategory */
     $trailerCategory = TrailerCategory::factory()->create();
 
-    $data = TrailerCategory::factory()->raw();
+    $data = TrailerCategory::factory()->make()->toArray();
 
     $trailerCategory->update($data);
 
@@ -57,7 +58,10 @@ it('has many trailer sub categories', function () {
     /** @var TrailerCategory $trailerCategory */
     $trailerCategory = TrailerCategory::factory()->hasTrailerSubCategories(3)->create();
 
-    expect($trailerCategory->trailerSubCategories)->toHaveCount(3)->each->toBeInstanceOf(TrailerSubCategory::class);
+    $trailerSubCategories = $trailerCategory->trailerSubCategories;
+
+    expect($trailerSubCategories)->toHaveCount(3);
+    $trailerSubCategories->each(fn ($subCategory) => expect($subCategory)->toBeInstanceOf(TrailerSubCategory::class));
 });
 
 /** casts() */

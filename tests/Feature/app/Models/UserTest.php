@@ -25,10 +25,10 @@ it('can update a user', function () {
     /** @var User $user */
     $user = User::factory()->create();
 
-    $data = User::factory()->raw([
+    $data = User::factory()->make([
         'password' => $user->password,
         'remember_token' => $user->remember_token
-    ]);
+    ])->toArray();
 
     $user->update($data);
 
