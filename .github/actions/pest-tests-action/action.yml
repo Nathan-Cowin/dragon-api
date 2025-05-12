@@ -1,0 +1,16 @@
+name: pest tests
+description: steps to run pest tests
+
+runs:
+  using: composite
+
+  steps:
+    - name: composer initialisation action
+      uses: ./.github/actions/composer-init-action
+
+    - name: run pest tests
+      run: composer run-script pest:ci
+      shell: bash
+      env:
+        DB_CONNECTION: mysql
+        DB_DATABASE: testing

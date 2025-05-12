@@ -1,0 +1,83 @@
+name: any pull request to main
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    branches:
+      - main
+
+jobs:
+  run-larastan-checks:
+    name: run larastan checks
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      - name: check out repository
+        uses: actions/checkout@v4
+
+      - name: composer intilisation action
+        uses: ./.github/actions/composer-init-action
+
+      - name: run larastan
+        run: composer run-script phpstan
+
+  run-pint-checks:
+    name: run pint checks
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      - name: check out repository
+        uses: actions/checkout@v4
+
+      - name: composer intilisation action
+        uses: ./.github/actions/composer-init-action
+
+      - name: run pint
+        run: composer run-script pint:ci
+
+  run-magic-number-checks:
+    name: run magic number checks
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      - name: check out repository
+        uses: actions/checkout@v4
+
+      - name: composer initialisation action
+        uses: ./.github/actions/composer-init-action
+
+      - name: run magic number detector
+        run: composer run-script phpmnd
+
+  run-pest-tests:
+    name: run pest tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+          --health-start-period=30s
+
+    steps:
+      - name: check out repository
+        uses: actions/checkout@v4
+
+      - name: run pest tests
+        uses: ./.github/actions/pest-tests-action

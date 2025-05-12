@@ -21,7 +21,8 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^3.8",
-        "pestphp/pest-plugin-laravel": "^3.2"
+        "pestphp/pest-plugin-laravel": "^3.2",
+        "povils/phpmnd": "*"
     },
     "autoload": {
         "psr-4": {
@@ -58,6 +59,19 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "pest:ci": "pest --ci --coverage --min=100 --parallel",
+        "pint:ci": "pint --dirty",
+        "pint": "pint",
+        "phpstan": "phpstan analyse",
+        "phpmnd": "phpmnd . --exclude tests --exclude storgage",
+        "check": [
+            "@composer validate --strict",
+            "@composer check-platform-reqs",
+            "@pest:ci",
+            "@phpstan",
+            "@pint",
+            "@phpmnd"
         ]
     },
     "extra": {
