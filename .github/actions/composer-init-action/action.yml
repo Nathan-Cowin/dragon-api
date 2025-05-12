@@ -1,0 +1,48 @@
+name: initialise composer
+description: steps to setup and install composer dependencies
+
+runs:
+  using: composite
+
+  steps:
+    - name: setup php
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        tools: composer:v2, pint
+        coverage: xdebug
+
+    - name: validate composer.json and composer.lock
+      run: composer validate --strict
+      shell: bash
+
+    - name: cache php extensions
+      uses: actions/cache@v3
+      with:
+        path: ${{ runner.tool_cache }}/php
+        key: php-extensions-${{ runner.os}}-${{ matrix.php }}-${{ hashFiles('.github/actions/composer-init-action.yml') }}
+
+    - name: get composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: cache composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ steps.composer-cache.outputs.dir }}
+          vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json', '**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: configure composer for parallel downloads
+      run: |
+        composer global config process-timeout 2000
+        composer global config --no-plugins allow-plugins true
+      shell: bash
+
+    - name: install dependencies
+      run: composer install --no-interaction --no-progress --optimize-autoloader --prefer-dist
+      shell: bash

@@ -27,7 +27,7 @@ it('can update a user', function () {
 
     $data = User::factory()->make([
         'password' => $user->password,
-        'remember_token' => $user->remember_token
+        'remember_token' => $user->remember_token,
     ])->toArray();
 
     $user->update($data);
@@ -59,6 +59,6 @@ it('has casts', function () {
     expect((new User)->getCasts())->toBe([
         'id' => 'int',
         'email_verified_at' => 'datetime',
-        'password' => 'hashed'
+        'password' => 'hashed',
     ]);
 });
