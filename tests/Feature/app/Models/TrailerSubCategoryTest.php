@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Trailer;
 use App\Models\TrailerCategory;
 use App\Models\TrailerSubCategory;
 use Illuminate\Support\Facades\Schema;
@@ -50,6 +51,17 @@ it('has fillable', function () {
         'long_description',
         'trailer_category_id',
     ]);
+});
+
+/** trailers() */
+it('has many trailers', function () {
+    /** @var TrailerSubCategory $trailerSubCategory */
+    $trailerSubCategory = TrailerSubCategory::factory()->hasTrailers(3)->create();
+
+    $trailers = $trailerSubCategory->trailers;
+
+    expect($trailers)->toHaveCount(3);
+    $trailers->each(fn ($trailer) => expect($trailer)->toBeInstanceOf(Trailer::class));
 });
 
 /** category() */
