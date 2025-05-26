@@ -3,7 +3,6 @@
 use App\Enums\UseType;
 use App\Models\TrailerCategory;
 use App\Models\TrailerSubCategory;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -49,7 +48,7 @@ it('can delete a trailer category', function () {
 it('has fillable', function () {
     expect((new TrailerCategory)->getFillable())->toBe([
         'name',
-        'use_type'
+        'use_type',
     ]);
 });
 

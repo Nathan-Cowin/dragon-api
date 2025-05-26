@@ -20,6 +20,7 @@ class TrailerCategoryIndexRequest extends FormRequest
     {
         /** @var int|null $perPage */
         $perPage = $this->validated('per_page');
+
         return $perPage;
     }
 }
