@@ -15,7 +15,7 @@ class TrailerCategory extends Model
 
     protected $fillable = [
         'name',
-        'use_type'
+        'use_type',
     ];
 
     /**

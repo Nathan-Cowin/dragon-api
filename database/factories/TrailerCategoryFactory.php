@@ -19,7 +19,7 @@ class TrailerCategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'use_type' => fake()->randomElement(UseType::class)
+            'use_type' => fake()->randomElement(UseType::class),
         ];
     }
 }

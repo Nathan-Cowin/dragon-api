@@ -12,12 +12,12 @@
 */
 
 use App\Models\User;
-
 use Pest\Expectation;
+
 use function Pest\Laravel\actingAs;
 
 pest()->extend(Tests\TestCase::class)
-  ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*

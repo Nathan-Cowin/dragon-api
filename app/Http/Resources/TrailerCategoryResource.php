@@ -23,7 +23,7 @@ class TrailerCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'use_type' => $this->use_type
+            'use_type' => $this->use_type,
         ];
     }
 }
